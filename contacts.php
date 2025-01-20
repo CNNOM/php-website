@@ -14,10 +14,10 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/about.html">About us</a></li>
+                <li><a href="/about.php">About us</a></li>
                 <li><a href="#">Portfolio</a></li>
                 <li><a href="#">News</a></li>
-                <li class="btn"><a href="/contacts.html">Contacts</a></li>
+                <li class="btn"><a href="/contacts.php">Contacts</a></li>
             </ul>
         </nav>
     </header>
