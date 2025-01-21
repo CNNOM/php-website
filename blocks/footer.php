@@ -20,5 +20,5 @@
         </div>
     </div>
     <hr>
-    <p>Copyright ® 2021 Lorem All rights Rcerved</p>
+    <a href="https://github.com/CNNOM?tab=repositories" style="display: flex; justify-content: center; align-items: center">Git: CNNOM</a>
 </footer>

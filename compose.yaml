@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   server:
     build:
@@ -7,3 +8,28 @@ services:
       - "8081:80"
     volumes:
       - .:/var/www/html # Синхронизация текущей директории с /var/www/html в контейнере
+    depends_on:
+      - db # Указываем, что сервер зависит от базы данных
+
+  db:
+    image: mysql:5.7 # Используем официальный образ MySQL 5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Пароль для root-пользователя
+      MYSQL_DATABASE: mydatabase # Имя базы данных, которая будет создана при запуске
+      MYSQL_USER: myuser # Имя пользователя базы данных
+      MYSQL_PASSWORD: mypassword # Пароль пользователя базы данных
+    volumes:
+      - mysql_data:/var/lib/mysql # Сохраняем данные базы данных в volume
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin # Используем официальный образ PHPMyAdmin
+    ports:
+      - "8082:80" # Пробрасываем порт 80 контейнера на порт 8082 хоста
+    environment:
+      PMA_HOST: db # Указываем, что PHPMyAdmin должен подключаться к контейнеру с базой данных
+      PMA_PORT: 3306 # Порт MySQL (по умолчанию 3306)
+    depends_on:
+      - db # Указываем, что PHPMyAdmin зависит от базы данных
+
+volumes:
+  mysql_data: # Создаём volume для хранения данных MySQL
