@@ -24,26 +24,48 @@
         </div>
 
         <div class="container trending">
-            <a href="#" class="see-all">SEE ALL</a>
+            <?php
+            // Обработка нажатия на ссылку
+            $seeAll = isset($_GET['seeAll']) && $_GET['seeAll'] == 1; // Меняем состояние переменной
+            print_r($seeAll);
+            ?>
+            <a href="?seeAll=<?= $seeAll ? 0 : 1 ?>" class="see-all">
+                <?= $seeAll ? "SEE LESS" : "SEE ALL" ?>
+            </a>
+
             <h3>Currently Trending Games</h3>
 
             <div class="games">
-                <div class="block">
-                    <img src="/img/game1.png" alt="">
-                    <span><img src="/img/fire.svg" alt=""> 40 Followers</span>
-                </div>
-                <div class="block">
-                    <img src="/img/game2.png" alt="">
-                    <span><img src="/img/fire.svg" alt=""> 40 Followers</span>
-                </div>
-                <div class="block">
-                    <img src="/img/game3.png" alt="">
-                    <span><img src="/img/fire.svg" alt=""> 40 Followers</span>
-                </div>
-                <div class="block">
-                    <img src="/img/game4.png" alt="">
-                    <span><img src="/img/fire.svg" alt=""> 40 Followers</span>
-                </div>
+                <?php
+                    $pdo = require_once "lib/db.php";
+
+                    $sql = "SELECT * FROM trending ORDER BY id";
+                    if (!$seeAll) {
+                        $sql .= " LIMIT 4";
+                    }else{
+                        $sql .= " LIMIT 5";
+                    }
+
+                    $query = $pdo->query($sql);
+                    $query->execute();
+                    $games = $query->fetchAll(PDO::FETCH_OBJ);
+
+                    foreach ($games as $game) {
+                        if($game->id % 4== 0){
+                            echo '
+                            <div>
+    
+                            </div>
+                        ';
+                        }
+                        echo '
+                        <div class="block">
+                            <img src="/img/'.$game->image.'" alt="">
+                            <span><img src="/img/fire.svg" alt=""> '.$game->followers.' Followers</span>
+                        </div>
+                        ';
+                    }
+                ?>
             </div>
         </div>
 
