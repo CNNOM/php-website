@@ -21,6 +21,9 @@
         exit;
     }
 
+    $salt = 'dadfgr430_30{d';
+    $password = md5($salt.$password); // хэш пароля
+
     $pdo = new PDO('mysql:host=db;dbname=mydatabase;port=3306', 'myuser', 'mypassword');
 
     $sql = 'INSERT INTO users(login, username, email, password) VALUES (?, ?, ?, ?)';
@@ -30,12 +33,4 @@
     $query->execute([$login, $username, $email, $password]);
     var_dump($login, $username, $email, $password);
 
-//    $sql = 'SELECT * FROM users'; // Выбираем все данные из таблицы users
-//    $query = $pdo->query($sql);
-//    $results = $query->fetchAll(PDO::FETCH_ASSOC); // Получаем данные в виде ассоциативного массива
-//
-//    foreach ($results as $row) {
-//        print_r($row); // Выводим каждую строку в консоль
-//    }
-
-
+    header('Location: /');
