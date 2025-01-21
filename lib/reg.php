@@ -24,8 +24,8 @@
     $salt = 'dadfgr430_30{d';
     $password = md5($salt.$password); // хэш пароля
 
-    $pdo = new PDO('mysql:host=db;dbname=mydatabase;port=3306', 'myuser', 'mypassword');
 
+    $pdo = require "db.php";
     $sql = 'INSERT INTO users(login, username, email, password) VALUES (?, ?, ?, ?)';
 
     $query = $pdo->prepare($sql);
@@ -33,4 +33,4 @@
     $query->execute([$login, $username, $email, $password]);
     var_dump($login, $username, $email, $password);
 
-    header('Location: /');
+    header('Location: /auth.php');
